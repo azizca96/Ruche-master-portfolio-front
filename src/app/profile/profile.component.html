@@ -1,0 +1,316 @@
+<div class="main" fxLayout="column">
+  <div class="NAV-BTN">
+    <a mat-icon-button *ngIf="!showDeep" routerLink="/home">
+      <mat-icon>home</mat-icon>
+    </a>
+    <button mat-icon-button *ngIf="showDeep && gohide" (click)="showDeep=!showDeep ;goHide=!gohide">
+      <mat-icon>close</mat-icon>
+    </button>
+
+  </div>
+  <div class="heading" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutGap="50px">
+      <div class="avatar">
+        <img src="https://api.adorable.io/avatars/285/amir@med.png" alt="" />
+      </div>
+      <div class="n-start">
+        <h3>{{user.last_name | uppercase}} {{user.first_name}}</h3>
+        <span>{{user.title || 'give yourself a title'}}</span>
+      </div>
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isOwner">
+      <mat-icon aria-label="seetings">settings</mat-icon>
+    </button>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openCandi()">List of candidancy</button>
+    <button mat-menu-item (click)="openEdit()">Edit</button>
+    <button mat-menu-item (click)="null">Disconnect</button>
+  </mat-menu>
+  <div fxLayout="row">
+    <div class="profile-content" fxFlex="0 0 100" fxLayout="column">
+      <div class="about-section animated" [class.dis-non]="showDeep && gohide" [class.fadeOut]="showDeep">
+        <div class="cord" fxLayout="row" fxLayoutAlign="end start">
+          <div fxFlex="240px" fxShow.lt-md="false"></div>
+          <ul fxFlex>
+            <li>Email : {{user.email}}</li>
+            <li>Phone : {{user.phone_number || 'we need your phone number'}}</li>
+            <li>Adresse : {{user.location || 'Give us your XY'}}</li>
+            <li>Birth date : {{(user.birthday | date) || 'When did you come to life'}}</li>
+
+            <li> <a href="" mat-stroked-button>
+                <mat-icon class="mat-18">attach_file</mat-icon>
+                Personal Resume
+              </a> </li>
+          </ul>
+        </div>
+        <h4>About :</h4>
+        <ng-container *ngIf="user.about; else elseTemplate">
+          <p>
+            {{user.about}}
+          </p>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="placeholding">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor ab
+              autem voluptatem illum consectetur. Laboriosam facilis minima sed
+              aliquam. Repellat est quos cumque quod. Quam dolores ex veritatis. Ea,
+              rem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+              eos earum, eaque corporis mollitia eligendi amet, vitae, dolor quos
+              ratione iure rerum quod quia ea culpa eveniet! Neque, architecto
+              vitae.
+            </p>
+            <div class="over">
+              <div>
+                You don't have this section , go ahread and add it from settings
+                <a mat-button color="warn" (click)="openEdit()">
+                  <mat-icon class="mat-18">edit</mat-icon>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor ab
+          autem voluptatem illum consectetur. Laboriosam facilis minima sed
+          aliquam. Repellat est quos cumque quod. Quam dolores ex veritatis. Ea,
+          rem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+          eos earum, eaque corporis mollitia eligendi amet, vitae, dolor quos
+          ratione iure rerum quod quia ea culpa eveniet! Neque, architecto
+          vitae.
+        </p> -->
+        <h4>What i'm looking for ! :</h4>
+        <ng-container *ngIf="user.looking_for; else elseTemplate2">
+          <p>
+            {{user.looking_for}}
+          </p>
+        </ng-container>
+        <ng-template #elseTemplate2>
+          <div class="placeholding">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor ab
+              autem voluptatem illum consectetur. Laboriosam facilis minima sed
+              aliquam. Repellat est quos cumque quod. Quam dolores ex veritatis. Ea,
+              rem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+              eos earum, eaque corporis mollitia eligendi amet, vitae, dolor quos
+              ratione iure rerum quod quia ea culpa eveniet! Neque, architecto
+              vitae.
+            </p>
+            <div class="over">
+              <div>
+                You don't have this section , go ahread and add it from settings
+                <a mat-button color="warn" (click)="openEdit()">
+                  <mat-icon class="mat-18">edit</mat-icon>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </ng-template>
+
+        <div class="cord" fxLayout="row" fxLayoutAlign="center center">
+          <button mat-stroked-button (click)="getDeep()">GET DEEP</button>
+        </div>
+      </div>
+      <div class="conten-section animated delay-1s" fxLayout.md="row" fxLayout.gt-md="row" fxLayout.lt-md="column"
+        [class.fadeIn]="showDeep" fxLayoutGap="20px" [class.dis-non]="!showDeep">
+        <div class="skills" fxLayout="column" fxFlex.md="0 0 30%" fxFlex.gt-md="0 0 30%">
+          <h4>Skills</h4>
+          <ng-container *ngIf="user.skills; else elseTemplateSkills">
+            <ul>
+              <li fxLayout="row" fxLayoutAlign="space-between" *ngFor="let item of user.skills">
+                <span>{{ item.name }}</span>
+                <div class="c100 p{{item.value}} small {{ item.value<50 ? 'orange':'green'}}">
+                  <span>{{ item.value }}%</span>
+                  <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </ng-container>
+          <ng-template #elseTemplateSkills>
+            <div class="placeholding">
+              <ul>
+                <li fxLayout="row" fxLayoutAlign="space-between">
+                  <span>Skill 1</span>
+                  <div class="c100 p90 small green">
+                    <span>90%</span>
+                    <div class="slice">
+                      <div class="bar"></div>
+                      <div class="fill"></div>
+                    </div>
+                  </div>
+                </li>
+                <li fxLayout="row" fxLayoutAlign="space-between">
+                  <span>Skill 2</span>
+                  <div class="c100 p90 small green">
+                    <span>90%</span>
+                    <div class="slice">
+                      <div class="bar"></div>
+                      <div class="fill"></div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="over">
+                <div>You don't have any skills !! start adding them now from setting section</div>
+              </div>
+            </div>
+          </ng-template>
+
+
+        </div>
+        <div class="expANDproj" fxLayout="column" fxFlex.md="0 0 70%" fxFlex.gt-md="0 0 70%">
+          <div class="expANDeduc" fxFlex>
+            <h4>Experience & Education</h4>
+            <mat-tab-group mat-align-tabs="center">
+              <mat-tab class="pad-tab" label="Experience">
+                <ng-container *ngIf="user.experience.length > 0; else elseTemplateExperience">
+                  <mat-accordion displayMode="flat" [multi]="false" [hideToggle]="false">
+                    <mat-expansion-panel [hideToggle]="false" *ngFor="let item of user.experience">
+                      <mat-expansion-panel-header>
+                        {{ item.job | uppercase }} @{{
+                        item.company_name | uppercase
+                        }}
+                        <span class="dur-small">
+                          <i class="material-icons"> calendar_today </i>
+                          <i class="d_u">{{ item.start_date | date }}</i>
+                          <i class="material-icons"> trending_flat </i>
+                          <i class="d_u">{{
+                            item.end_date ? (item.end_date | date) : "current"
+                            }}</i>
+                        </span>
+                      </mat-expansion-panel-header>
+                      -
+
+                      <p>{{ item.dscrp }}</p>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </ng-container>
+                <ng-template #elseTemplateExperience>
+                  <mat-accordion displayMode="flat" [multi]="false" [hideToggle]="false">
+                    <mat-expansion-panel [hideToggle]="false">
+                      <mat-expansion-panel-header>
+                        Experience i have @ company
+                        <span class="dur-small">
+                          <i class="material-icons"> calendar_today </i>
+                          <i class="d_u">12/12/2012</i>
+                          <i class="material-icons"> trending_flat </i>
+                          <i class="d_u">Current
+                          </i>
+                        </span>
+                      </mat-expansion-panel-header>
+                      -
+                      <div class="placeholding">
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat aliquam beatae adipisci
+                          explicabo
+                          ratione debitis minima hic, sit odit temporibus eligendi. Quae ad officia molestias. Ad quae
+                          quia
+                          ea non.
+                        </p>
+                        <div class="over">
+                          There is no experience right now , to change that start adding theme from the settings !!
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </ng-template>
+              </mat-tab>
+              <mat-tab class="pad-tab" label="Education">
+                <div class="bar"></div>
+                <div class="timeline">
+                  <ng-container *ngIf="user.education && user.education.length > 0; else elseTemplateEducation">
+                    <div class="entry" *ngFor="let item of user.education">
+                      <div class="wrapper-entry" fxLayout="column">
+                        <h1>{{ item.degree }}</h1>
+                        <h2>
+                          {{ item.start_date | date }} -
+                          {{ item.start_date | date }}
+                        </h2>
+                        <h2>{{ item.instut }}</h2>
+                        <p>{{ item.dscrp }}</p>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #elseTemplateEducation>
+                    <div class="placeholding">
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat aliquam beatae adipisci
+                        explicabo
+                      </p>
+                      <div class="over">
+                        Add you education corsus right now
+                      </div>
+                    </div>
+                  </ng-template>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+          <div class="projects" fxFlex>
+            <h4>Projects</h4>
+            <mat-accordion displayMode="flat" [multi]="false" [hideToggle]="false">
+              <ng-container *ngIf="user.projects && user.projects.length > 0; else elseTemplateProjects">
+                <mat-expansion-panel [hideToggle]="false" *ngFor="let item of user.projects">
+                  <mat-expansion-panel-header>
+                    {{ item.title }}
+                  </mat-expansion-panel-header>
+                  Realase Date : <span>{{ item.date | date }}</span>
+                  <p>{{ item.dscrp }}</p>
+                  <a href="{{ item.link }}" mat-button>Visit the application</a>
+
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <!--
+                                    <img *ngFor="let img of item.images" src="{{img}}" alt="" />
+                                  -->
+                    <div ng2-carouselamos [width]="500" [items]="item.images" [$item]="itemTemplate" [$prev]="prevTemplate"
+                      [$next]="nextTemplate" (onSelectedItem)="
+                                      selectedItem = $event.item; selectedIndex = $event.index
+                                    "></div>
+                  </div>
+
+                  <ng-template #prevTemplate>
+                    <i class="material-icons"> arrow_left </i>
+                    <!-- <img src="prev.png" /> -->
+                  </ng-template>
+
+                  <ng-template #nextTemplate>
+                    <!-- <img src="next.png" /> -->
+                    <i class="material-icons"> arrow_right </i>
+                  </ng-template>
+
+                  <ng-template let-item let-i="index" #itemTemplate>
+                    <div>
+                      <img src="{{item}}" alt="" />
+                      <!--
+                                      <b *ngIf="i === selectedIndex">{{ i }}.</b>
+                                      <span *ngIf="i !== selectedIndex">{{ i }}.</span>
+                                    -->
+                    </div>
+                  </ng-template>
+                </mat-expansion-panel>
+              </ng-container>
+              <ng-template #elseTemplateProjects>
+                <div class="placeholding">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat aliquam beatae adipisci
+                    explicabo
+                  </p>
+                  <div class="over">
+                    Add you education corsus right now
+                  </div>
+                </div>
+              </ng-template>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

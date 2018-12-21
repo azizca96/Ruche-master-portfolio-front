@@ -1,0 +1,19 @@
+<h1 matDialogTitle>Edit Profile</h1>
+
+<mat-dialog-content>
+  <mat-accordion displayMode="default" [multi]="false" [hideToggle]="false">
+    <mat-expansion-panel [hideToggle]="false" *ngFor="let item of list">
+      <mat-expansion-panel-header>{{item.offerdata.title}}</mat-expansion-panel-header>
+      <span>{{item.offerdata.date | date}}</span><br>
+      <span> <b>Salaire</b> {{item.offerdata.salaire[0]}} - {{item.offerdata.salaire[1]}}</span><br>
+      <span>{{item.offerdata.location}}</span><br>
+      <p>{{item.offerdata.description}}</p>
+      <mat-action-row>
+        <button mat-button (click)="null">delete</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-button matDialogClose>Close</button>
+</mat-dialog-actions>

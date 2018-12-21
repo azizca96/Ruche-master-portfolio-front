@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>Postuling in {{offer.title}} @ {{offer.company}}</h1>
+<div mat-dialog-content fxLayout="column">
+  <div class="heading" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="30px">
+    <img [src]="offer.img" alt="">
+    <div class="heading-data" fxLayout="column">
+      <h4>{{offer.title}}</h4>
+      <div class="row" fxLayout="row">
+        <div class="tit">
+          Company :
+        </div>
+        <span>{{offer.company}}</span>
+      </div>
+      <div class="row" fxLayout="row">
+        <div class="tit">
+          Date :
+        </div>
+        <span>{{offer.date | date}}</span>
+      </div>
+      <div class="row" fxLayout="row">
+        <div class="tit">
+          Location :
+        </div>
+        <span>{{offer.location}}</span>
+      </div>
+      <div class="row" fxLayout="row">
+        <div class="tit">
+          Salairy :
+        </div>
+        <i color="primary" *ngIf="offer.salaire && offer.salaire.length >=1">{{offer.salaire[0]}} -
+          {{offer.salaire[1]}}</i>
+        <i color="primary" *ngIf="!offer.salaire || offer.salaire.length == 0">Not Set</i>
+      </div>
+    </div>
+  </div>
+  <div class="details" fxLayout="column">
+    <h4>The Company</h4>
+    <p>
+      {{offer.about}}
+    </p>
+  </div>
+  <div class="required">
+    <h4>What is About !</h4>
+    <p>{{offer.description}}</p>
+  </div>
+  <div class="requirments">
+    <h4>Requirments</h4>
+    <mat-chip-list>
+      <mat-chip *ngFor="let chip of offer.requirements">
+        {{chip}}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center" fxLayout="row">
+  <button mat-button (click)="onNoClick()">Close</button>
+  <button mat-stroked-button color="warn" [mat-dialog-close]="data.animal" *ngIf="isConnected" (click)="postule()"
+    cdkFocusInitial>Postule</button>
+  <button mat-stroked-button color="warn" [mat-dialog-close]="data.animal" *ngIf="!isConnected" routerLink="/auth"
+    cdkFocusInitial>Connect to postule</button>
+
+</div>

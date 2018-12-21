@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css?family=Chakra+Petch");
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+$bg-color: #4242e6;
+$glitch-bg-color: $bg-color;
+$color1: $bg-color;
+
+/deep/ app-landing {
+  flex-direction: column;
+  background: $glitch-bg-color;
+  position: relative;
+
+  .holding {
+    display: flex;
+    flex-grow: 1;
+    border: 10px solid $bg-color;
+    background: white url(../../assets/img/main_bg2.jpg) center center no-repeat;
+    background-size: cover;
+    padding: 20px;
+    min-height: 100%;
+
+    .speedyinfoSide {
+      p {
+        color: #f1f5f7;
+        font-size: 16px;
+        font-family: 'Raleway',
+          sans-serif;
+        padding-left: 15px;
+      }
+
+      .homebtn {
+        background: rgba($color: $bg-color, $alpha: 0.5);
+        border: 3px solid rgba(241, 245, 247, 0.4);
+        text-align: center;
+        padding: 15px;
+        text-transform: uppercase;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 0;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: #f1f5f7;
+        line-height: initial;
+        padding: 26px 39px;
+        -moz-transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        -o-transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        -webkit-transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        width: 40px;
+      }
+    }
+
+    .txtSide {
+
+      color: #fff;
+
+
+      h3 {
+        color: #fff;
+        font-size: 60px;
+        margin-bottom: 10px;
+      }
+
+      h5 {
+        font-size: 20px;
+        margin-top: 5px;
+      }
+
+      p {
+        font-size: 22px;
+        font-family: 'Raleway',
+          sans-serif;
+      }
+
+      .register {
+        background: rgba($color: $bg-color, $alpha: 0.1);
+        border: 3px solid rgba(241, 245, 247, 0.4);
+        text-align: center;
+        padding: 15px;
+        text-transform: uppercase;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 0;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: #f1f5f7;
+        line-height: initial;
+        padding: 26px 39px;
+        -moz-transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        -o-transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        -webkit-transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        transition: border-color 1s, color 1s, box-shadow 0.9s,
+          background-color 1s;
+        width: auto;
+      }
+    }
+  }
+
+  .subholding {
+    display: flex;
+    height: 100%;
+    border: 10px solid $bg-color;
+    background: rgba($color: #f1f5f7, $alpha: 1);
+    font-family: 'Raleway',
+      sans-serif;
+
+
+    .picSec1 {
+      background: rgb(8, 44, 76) url(../../assets/img/estatual.png) center right no-repeat;
+      background-size: contain;
+
+    }
+
+    .picSec2 {
+      background: url(../../assets/img/statue_2_white.png)top left no-repeat,
+        url(../../assets/img/statue_2_shadow.png) top left no-repeat,
+        #f03856;
+      background-size: cover;
+
+    }
+
+    .talki {
+      padding: 20px;
+      position: relative;
+
+      p {
+        z-index: 2;
+      }
+
+      .topSec {
+        width: 100%;
+        z-index: 2;
+
+        .nbSec {
+          color: rgba($color: #000, $alpha: 0.5);
+          font-size: 14px;
+        }
+
+        .titSec {
+          font-size: 20px;
+          color: rgba($color: #000000, $alpha: 1.0);
+          text-transform: uppercase;
+        }
+      }
+
+    }
+  }
+
+  .footer {
+    display: flex;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border: 10px solid $bg-color;
+    background: rgba($color: $bg-color, $alpha: 1);
+    font-family: 'Raleway',
+      sans-serif;
+  }
+
+  #drawer-1,
+  #drawer-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    opacity: 0.3;
+    margin: 0 !important;
+    overflow: hidden;
+  }
+}

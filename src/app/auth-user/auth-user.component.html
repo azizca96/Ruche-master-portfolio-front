@@ -1,0 +1,251 @@
+<div class="main" fxLayout="column" fxLayoutAlign="center center">
+  <h4>Ruche.</h4>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0px" fxFill>
+    <div
+      class="sign-in"
+      *ngIf="showPhase.signin"
+      fxLayout="column"
+      fxFlex.lt-md="100%"
+      fxFlex.md="60%"
+      fxFlex.gt-md="50%"
+    >
+      <h4>Login /</h4>
+      <hr />
+      <div class="example-container">
+        <mat-form-field>
+          <mat-icon matSuffix>email</mat-icon>
+          <input
+            matInput
+            placeholder="Email"
+            type="email"
+            [(ngModel)]="logindata.email"
+          />
+          <mat-hint>Give your email!</mat-hint>
+          <!--
+            <mat-error *ngIf="
+                emailFormControl.hasError('email') &&
+                !emailFormControl.hasError('required')
+              ">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          -->
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matSuffix>Password</mat-icon>
+          <input
+            matInput
+            placeholder="Password"
+            type="password"
+            [(ngModel)]="logindata.password"
+          />
+          <mat-hint>And your pass to cosmos!</mat-hint>
+          <!--
+            <mat-error *ngIf="passwordFormControl.hasError('required')">
+              password is <strong>required</strong>
+            </mat-error>
+          -->
+        </mat-form-field>
+        <div class="row-btn" fxLayout="row" fxLayoutAlign="space-between">
+          <button
+            mat-button
+            color="primary"
+            (click)="showPhase.signup = true; showPhase.signin = false"
+          >
+            I don't have an account!!
+          </button>
+          <button mat-stroked-button color="accent" (click)="login()">
+            Login now
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sign-up"
+      *ngIf="showPhase.signup"
+      fxLayout="column"
+      fxFlex.lt-md="100%"
+      fxFlex.md="60%"
+      fxFlex.gt-md="50%"
+    >
+      <h4>Register /</h4>
+      <hr />
+      <form
+        [formGroup]="regForm"
+        (ngSubmit)="register()"
+        fxFlex
+        fxLayout="column"
+      >
+        <mat-form-field>
+          <mat-select
+            [(value)]="userType"
+            name="user_type"
+            formControlName="user_type"
+            id="user_type"
+            placeholder="I'm Regstring as .. "
+          >
+            <mat-option value="us">A Job Seeker</mat-option>
+            <mat-option value="cm">A Star Seeker</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="example-container" *ngIf="userType == 'us'">
+          <h5>Hi Star , Give as your info Down here</h5>
+          <div
+            class="row-btn"
+            fxLayout="row"
+            fxLayout.lt-md="column"
+            fxLayoutAlign="space-between"
+          >
+            <mat-form-field fxFlex>
+              <mat-icon matSuffix>user</mat-icon>
+              <input
+                matInput
+                placeholder="name"
+                formControlName="name"
+                name="user_name"
+                type="text"
+              />
+              <mat-hint>Give your Name!</mat-hint>
+              <mat-error *ngIf="regForm.get('name').hasError('required')">
+                name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <mat-icon matSuffix>user</mat-icon>
+              <input
+                matInput
+                placeholder="last name"
+                formControlName="last_name"
+                name="user_last_name"
+                type="text"
+              />
+              <mat-hint>Give your Last Name!</mat-hint>
+              <mat-error *ngIf="regForm.get('last_name').hasError('required')">
+                last name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field>
+            <mat-icon matSuffix>email</mat-icon>
+            <input
+              matInput
+              placeholder="Email"
+              name="user_email"
+              type="email"
+              formControlName="email"
+            />
+            <mat-hint>Give your email!</mat-hint>
+            <mat-error *ngIf="regForm.get('email').hasError('required')">
+              email is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="regForm.get('email').hasError('email')">
+              email is <strong>NOT CORRECT</strong>
+            </mat-error>
+          </mat-form-field>
+          <div
+            class="row-btn"
+            fxLayout="row"
+            fxLayout.lt-md="column"
+            fxLayoutAlign="space-between"
+          >
+            <mat-form-field>
+              <mat-icon matSuffix>Password</mat-icon>
+              <input
+                matInput
+                placeholder="Password"
+                formControlName="password"
+                id="password"
+                name="password"
+                type="password"
+              />
+              <mat-hint>And your pass to cosmos!</mat-hint>
+              <mat-error *ngIf="regForm.get('password').hasError('required')">
+                password is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="regForm.get('password').hasError('minLength')">
+                password need to be <strong>6 char length at least</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-icon matSuffix>Password</mat-icon>
+              <input
+                matInput
+                placeholder="Confirm Password"
+                formControlName="password_c"
+                type="password"
+                name="user_password_c"
+              />
+              <mat-hint>Again!</mat-hint>
+              <mat-error *ngIf="regForm.get('password_c').hasError('required')">
+                password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="example-container" *ngIf="userType == 'cm'">
+          <h5>Hi You , We got Stars</h5>
+          <mat-form-field fxFlex>
+            <mat-icon matSuffix>user</mat-icon>
+            <input
+              matInput
+              placeholder="Company Name"
+              formControlName="c_name"
+              type="text"
+            />
+            <mat-hint>Give your Company Name!</mat-hint>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-icon matSuffix>user</mat-icon>
+            <input
+              matInput
+              placeholder="Company email"
+              formControlName="c_email"
+              type="email"
+            />
+            <mat-hint>Give your Main Email!</mat-hint>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-icon matSuffix>user</mat-icon>
+            <input
+              matInput
+              placeholder="Company password"
+              formControlName="c_password"
+              type="password"
+            />
+            <mat-hint>You need a strong one!</mat-hint>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-icon matSuffix>user</mat-icon>
+            <input
+              matInput
+              placeholder="Company password again"
+              formControlName="c_password_c"
+              type="password"
+            />
+            <mat-hint>You need it again!</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="row-btn" fxLayout="row" fxLayoutAlign="space-between">
+          <button
+            mat-button
+            color="primary"
+            (click)="showPhase.signup = false; showPhase.signin = true"
+          >
+            i have An account!!
+          </button>
+          <button
+            mat-stroked-button
+            color="accent"
+            type="submit"
+            [disabled]="!regForm.valid && userType == 'us'"
+          >
+            JOIN NOW
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

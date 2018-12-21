@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css?family=Chakra+Petch");
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+$bg-color: hsl(288, 77%, 58%);
+$glitch-bg-color: $bg-color;
+$color1: $bg-color;
+
+/deep/ app-home {
+  flex-direction: column;
+  background: $glitch-bg-color;
+  position: relative;
+
+  .padi-main {
+    padding: 10px;
+  }
+
+  .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #6190E8;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #A7BFE8, #6190E8);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #A7BFE8, #6190E8);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    color: white;
+    text-align: center;
+    z-index: 999;
+  }
+
+  .fonti {
+    font-family: 'Raleway',
+      sans-serif;
+    font-weight: 400;
+  }
+
+  .example-icon {
+    padding: 0 14px;
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .example-container {
+    // position: absolute;
+    top: 0;
+    //bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .example-margin {
+    margin: 10px;
+  }
+
+  .main {
+    display: flex;
+    position: relative;
+    flex-grow: 1;
+    border-top: 10px solid $bg-color;
+    background: white;
+    background-size: cover;
+    min-height: 100%;
+
+    .sidenav {
+      width: 300px;
+    }
+
+    .smallSide {
+      width: 300px
+    }
+
+    .medSide {
+      width: 30%;
+    }
+
+    .bigSide {
+      width: 40%
+    }
+
+    .search-box {
+      background: $bg-color;
+      padding: 5px;
+
+      .white {
+        color: white !important;
+      }
+
+      input {
+        border: none;
+        border-bottom: 2px solid rgba($color: #dddddd, $alpha: 1.0);
+        font-size: 20px;
+        color: white;
+        padding: 3px;
+        background: transparent;
+      }
+    }
+
+    .example-viewport {
+      height: 100%;
+      width: 100%;
+      padding: 5px;
+    }
+
+    app-offer-item {
+      flex-direction: column;
+      position: relative;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .footer {
+    display: flex;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border: 10px solid $bg-color;
+    background: rgba($color: $bg-color, $alpha: 1);
+    font-family: 'Raleway',
+      sans-serif;
+  }
+}

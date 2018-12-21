@@ -1,0 +1,266 @@
+<h1 matDialogTitle>Edit Profile</h1>
+
+<mat-dialog-content>
+  <mat-horizontal-stepper [linear]="false" #stepper>
+    <mat-step fxLayout="row" fxFlex>
+      <form #persoform="ngForm" (ngSubmit)="save(persoform)" fxLayout="column">
+        <ng-template matStepLabel>Personal Information</ng-template>
+        <div fxLayout="row" fxLayout.lt-md="column" fxFlex>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="First name" [(ngModel)]="user.first_name" name="first_name" required>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Last name" [(ngModel)]="user.last_name" name="last_name" required>
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <input matInput placeholder="Title" [(ngModel)]="user.title" name="title">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" placeholder="Phone" [(ngModel)]="user.phone_number" name="phone_number">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="address" placeholder="address" [(ngModel)]="user.location" name="location">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="date" placeholder="birthdate" [(ngModel)]="user.birthday" name="birthday">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput name="about" placeholder="about" [(ngModel)]="user.about"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput name="looking_for" placeholder="what your looking for" [(ngModel)]="user.looking_for"></textarea>
+        </mat-form-field>
+        <div>
+          <button mat-button type="submit">Save</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step fxLayout="row" fxFlex>
+      <form #expform="ngForm" (ngSubmit)="save(expform,'experience')" fxLayout="column">
+        <ng-template matStepLabel>Experience</ng-template>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
+            <mat-form-field>
+              <input matInput fxFlex type="text" [(ngModel)]="job" placeholder="Post title" name="job" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput fxFlex type="text" [(ngModel)]="company_name" placeholder="Company name" name="company_name"
+                required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="date" [(ngModel)]="start_date" placeholder="Start From" name="start_date" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="date" [(ngModel)]="end_date" placeholder="End at" name="end_date">
+              <mat-hint>
+                Leave empty if current
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>Tell as about this experience</mat-label>
+            <textarea matInput cdkTextareaAutosize name="dscrp" [(ngModel)]="dscrp" #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"></textarea>
+          </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-button type="submit">
+              Add Experience
+              <mat-icon class="mat-18">save</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <h5>List of Experiences</h5>
+      <mat-accordion displayMode="flat" [multi]="false" [hideToggle]="false" *ngIf="user.experience && user.experience.length > 0">
+        <mat-expansion-panel [hideToggle]="false" *ngFor="let item of user.experience; let i=index">
+          <mat-expansion-panel-header>{{item.job}} @ {{item.company_name}}</mat-expansion-panel-header>
+          From {{item.start_date | date}} to {{(item.end_date | date)||'Current'}}
+          <br>
+          {{item.dscrp}}
+          <mat-action-row>
+            <button mat-button color="warn" (click)="deleteExp(item._id)">Delete This Experience</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <!-- <div fxLayout="row" fxLayoutAlign="end">
+        <button mat-button type="submit">Save</button>
+      </div> -->
+
+    </mat-step>
+    <mat-step fxLayout="row" fxFlex>
+      <form fxLayout="column" #projform="ngForm" (ngSubmit)="save(projform,'project')">
+        <ng-template matStepLabel>Projects</ng-template>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
+            <mat-form-field>
+              <input matInput fxFlex placeholder="Project title" [(ngModel)]="title" name="title" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="url" fxFlex placeholder="Project Url" [(ngModel)]="link" name="link">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="date" placeholder="Relase Date" name="date" [(ngModel)]="date" required>
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>Tell as about this Project</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" [(ngModel)]="dscrp" name="dscrp"
+              cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"></textarea>
+          </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-button type="submit">
+              Add Project
+              <mat-icon class="mat-18">save</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <h5>List of Projects</h5>
+      <mat-accordion displayMode="flat" [multi]="false" [hideToggle]="false">
+        <mat-expansion-panel [hideToggle]="false" *ngFor="let item of user.projects; let i=index">
+          <mat-expansion-panel-header>{{item.title}}</mat-expansion-panel-header>
+          Project Created : {{item.date | date}} <br>
+          <a *ngIf="item.link" href="{{item.link}}" mat-button color="primary">Visit project</a> <br>
+          <p>
+            {{item.dscrp}}
+          </p>
+          <mat-action-row>
+            <button mat-button color="warn" (click)="deletePrj(item._id)">Delete This Project</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </mat-step>
+    <mat-step fxLayout="row" fxFlex>
+      <form fxLayout="column" #skillForm="ngForm" (ngSubmit)="save(skillForm,'skill')">
+        <ng-template matStepLabel>Skills</ng-template>
+        <p>Start typing to add skill from the autocomplete list , in case the skill you want to add is not shown the
+          application will allow you to add it , then the admin will review that skill and decide if it can be added or
+          not</p>
+        <mat-form-field class="example-chip-list" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-between">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let skill of user.skills" [removable]="true" (removed)="remove(skill)">
+              {{skill.name}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="New Skill..." #skillInput [matAutocomplete]="auto" [formControl]="skillCtrl"
+              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" name="name"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let skill of filteredSkills | async" [value]="skill">
+              {{skill}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-accordion displayMode="default" *ngIf="user.skills && user.skills.length > 0" [multi]="true" [hideToggle]="false">
+          <mat-expansion-panel [hideToggle]="false" *ngFor="let item of user.skills">
+            <mat-expansion-panel-header>{{item.name}}</mat-expansion-panel-header>
+            <div fxLayout="row">
+              <mat-form-field>
+                <input matInput name="name" [value]="item.name" readonly>
+                <mat-hint>
+                  Skill Name
+                </mat-hint>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="out of 100%" name="value" [(ngModel)]="item.value">
+                <mat-hint>
+                  How much you're into that !
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <mat-action-row>
+              <button mat-stroked-button (click)="deleteSkill(item._id)">Detele This</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div fxLayout="row" fxLayoutAlign="end">
+          <button mat-raised-button color="warn" type="submit">Save all changes</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step fxLayout="row" fxFlex>
+      <form fxLayout="column" #secuForm="ngForm" (ngSubmit)="save(secuForm)">
+        <ng-template matStepLabel>Security</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Old Password" name="o_pass" required>
+          <mat-hint>
+            You need to remeber
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="New Password" name="n_pass" required>
+          <mat-hint>
+            New , that mean different then the old one , but with the same Rule , length >= 6
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Again the new One " name="nn_pass" required>
+          <mat-hint>
+            This need to be the same as the new one
+          </mat-hint>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="end">
+          <button mat-button type="submit" color="warn">Save</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step fxLayout="row" fxFlex>
+      <form fxLayout="column" #educationForm="ngForm" (ngSubmit)="save(educationForm,'education')">
+        <ng-template matStepLabel>Education</ng-template>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
+            <mat-form-field>
+              <input matInput fxFlex placeholder="Degree title" [(ngModel)]="degree" name="degree" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput fxFlex placeholder="Where" [(ngModel)]="instut" name="instut" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="date" placeholder="Start From" [(ngModel)]="start_date" name="start_date" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput type="date" placeholder="End at" [(ngModel)]="end_date" name="end_date">
+              <mat-hint>
+                Leave empty if current
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>Tell us about this Education field</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" name="dscrp" [(ngModel)]="dscrp"
+              cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"></textarea>
+          </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-button type="submit">
+              Add education
+              <mat-icon class="mat-18">save</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <h5>List of education</h5>
+      <mat-accordion displayMode="flat" [multi]="false" [hideToggle]="false" *ngIf="user.education && user.education.length > 0">
+        <mat-expansion-panel [hideToggle]="false" *ngFor="let item of user.education">
+          <mat-expansion-panel-header>{{item.degree}} @ {{item.instut}}</mat-expansion-panel-header>
+          i get this degree at : {{item.start_date | date}} - {{(item.end_date | date) || 'currently study'}}
+          <br>
+          {{item.dscrp}}
+          <mat-action-row>
+            <button mat-raised-button color="warn" (click)="deleteEdc(item._id)">Delete This education</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div fxLayout="row" fxLayoutAlign="end">
+        <button mat-button type="submit" color="warn">Save</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-button matDialogClose>Close</button>
+</mat-dialog-actions>

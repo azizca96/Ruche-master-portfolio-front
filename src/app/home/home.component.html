@@ -1,0 +1,121 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="fonti">Ruche.</span> <span class="example-spacer"></span>
+    <mat-icon class="example-icon">verified_user</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menuRefTop">
+      <mat-icon class="mat-18">menu</mat-icon>
+    </button>
+    <mat-menu #menuRefTop="matMenu">
+      <button mat-menu-item routerLink="/profile/{{user['_id']}}" *ngIf="user['_id']">
+        Profile
+      </button>
+      <button mat-menu-item (click)="null">
+        Deco
+      </button>
+      <button mat-menu-item routerLink="/auth">
+        Connect
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="main">
+  <div class="loader" *ngIf="!readytoSHOW" fxLayoutAlign="center center" fxLayout="column">
+    <mat-spinner></mat-spinner>
+    <p>RUCHE.</p>
+  </div>
+  <mat-sidenav-container class="example-container" fxFlex fxLayout="row" *ngIf="readytoSHOW">
+    <mat-sidenav [ngClass]="{
+        smallSide: isScreenSmall,
+        medSide: isScreenMed,
+        bigSide: isScreenBig
+      }"
+      #sidenav [mode]="sideType" [(opened)]="opened">
+      <div fxLayout="column">
+        <div class="search-box" fxLayout="row">
+          <button (click)="sidenav.toggle()" mat-icon-button class="white">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <input type="search" name="search_in" id="search_in" placeholder="looking for ..." [(ngModel)]="search.wrd"
+            fxFlex />
+          <button (click)="searchDo()" mat-icon-button class="white">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+        <mat-accordion displayMode="flat" [multi]="true" [hideToggle]="false">
+          <mat-expansion-panel [hideToggle]="false">
+            <mat-expansion-panel-header>Offer Filter</mat-expansion-panel-header>
+            <div fxLayout="row">
+              <mat-chip-list multiple="true" #offerList (change)="search.offerTypes = offerList">
+                <mat-chip *ngFor="let item of offerTypes" selected="{{item.stat}}" (click)="item.stat = !item.stat">
+                  {{ item.type }}
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel [hideToggle]="false">
+            <mat-expansion-panel-header>
+              <p>
+                <span matBadge="{{skillesFilter.selectedOptions.selected.length}}" matBadgeOverlap="false">Skill Filter</span>
+              </p>
+            </mat-expansion-panel-header>
+            <mat-selection-list #skillesFilter>
+              <mat-list-option *ngFor="let skill of skillsList">
+                {{ skill }}
+              </mat-list-option>
+            </mat-selection-list>
+          </mat-expansion-panel>
+          <mat-expansion-panel [hideToggle]="false">
+            <mat-expansion-panel-header>
+              Experience Filter
+            </mat-expansion-panel-header>
+            <div fxLayout="column">
+              <p>Offers with {{ search.exp }} Years</p>
+              <mat-slider class="example-margin" [max]="20" [min]="0" [step]="1" [thumbLabel]="true" [(ngModel)]="search.exp"
+                fxFlex>
+              </mat-slider>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlex fxLayout="row" fxLayoutAlign="start start">
+      <div fxLayout="column" fxFlex class="padi-main" fxFlex-lt.md="100%" fxFlex-gt.md="50%" fxFlex-md="50%">
+        <button *ngIf="!sidenav.opened" mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon class="mat-18">menu</mat-icon>
+        </button>
+        <ng-container *ngIf="!filterOn; else elseTemplate">
+          <app-offer-item *ngFor="let item of offers" [offer]="item">
+          </app-offer-item>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <app-offer-item *ngFor="let item of bck" [offer]="item">
+          </app-offer-item>
+        </ng-template>
+
+
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<div class="footer" fxLayout="column" fxLayoutAlign="space-between">
+  <span>_Ruche Company</span>
+  <div fxLayout="row" fxLayout.lt-md="column">
+    <div fxFlex.lt-md="100%" fxFlex="50%">
+      <h5>About</h5>
+      <p>
+        Ruche it's a Company that help for fast and quality recuriting . and it
+        help also Young talents to find the better opurtinity that they seek .
+      </p>
+    </div>
+    <div fxFlex.lt-md="100%" fxFlex="50%">
+      <ul>
+        <li>WebSte :</li>
+        <li>Phone :</li>
+        <li>Fax :</li>
+        <li>Email :</li>
+      </ul>
+    </div>
+  </div>
+  <div fxLayout="row">Ruche copyright @ 2018 - 2019 , Tunisia</div>
+</div>

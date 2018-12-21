@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css?family=Chakra+Petch");
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+$bg-color: hsl(288, 77%, 58%);
+$glitch-bg-color: $bg-color;
+$color1: $bg-color;
+
+mat-dialog-title {
+  font-family: 'Raleway',
+    sans-serif;
+  background: rgba($color: #cccccc, $alpha: .5)
+}
+
+.heading {
+  font-family: 'Raleway',
+    sans-serif;
+
+  img {
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+  }
+
+  .heading-data {
+    h4 {
+      font-size: 22px;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+
+    .row {
+      margin-top: 5px;
+
+      .tit {
+        font-weight: 700;
+        letter-spacing: 1.5;
+      }
+
+      i {
+        text-decoration: underline;
+      }
+
+      span {
+        font-size: 16px;
+        letter-spacing: 1.2;
+      }
+    }
+  }
+}
